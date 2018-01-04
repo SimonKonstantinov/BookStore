@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,12 +23,14 @@ namespace BookStore.Controllers
             return View();
         }
         [HttpGet]
+
         public ActionResult Buy(int id)
         {
             ViewBag.BookId = id;
             return View();
         }
         [HttpPost]
+
         public string Buy(Purchase purchase)
         {
             purchase.Date = DateTime.Now;
@@ -36,6 +39,38 @@ namespace BookStore.Controllers
             // сохраняем в бд все изменения
             db.SaveChanges();
             return "Спасибо," + purchase.Person + ", за покупку!";
+        }
+
+        public FileResult GetFile()
+        {
+            // Путь к файлу
+            string file_path = Server.MapPath("~/Files/Pekunov44.docx");
+            // Тип файла - content-type
+            string file_type = "application/docx";
+            // Имя файла - необязательно
+            string file_name = "1.docx";
+            return File(file_path, file_type, file_name);
+        }
+       
+        // Отправка массива байтов
+        public FileResult GetBytes()
+        {
+            string path = Server.MapPath("~/Files/Pekunov44.docx");
+            byte[] mas = System.IO.File.ReadAllBytes(path);
+            string file_type = "application/docx";
+            string file_name = "1.docx";
+            return File(mas, file_type, file_name);
+        }
+        
+        // Отправка потока
+        public FileResult GetStream()
+        {
+            string path = Server.MapPath("~/Files/Pekunov44.docx");
+            // Объект Stream
+            FileStream fs = new FileStream(path, FileMode.Open);
+            string file_type = "application/docx";
+            string file_name = "1.docx";
+            return File(fs, file_type, file_name);
         }
     }
 
