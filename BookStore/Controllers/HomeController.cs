@@ -41,7 +41,19 @@ namespace BookStore.Controllers
             db.SaveChanges();
             return "Спасибо," + purchase.Person + ", за покупку!";
         }
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(Book book)
+        {
+            db.Books.Add(book);
+            db.SaveChanges();
 
+            return RedirectToAction("Index");
+        }
         [HttpGet]
         public ActionResult EditBook(int? id)
         {
@@ -64,6 +76,29 @@ namespace BookStore.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            Book b = db.Books.Find(id);
+            if (b == null)
+            {
+                return HttpNotFound();
+            }
+            return View(b);
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Book b = db.Books.Find(id);
+            if (b == null)
+            {
+                return HttpNotFound();
+            }
+            db.Books.Remove(b);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         public FileResult GetFile()
         {
             // Путь к файлу
@@ -74,7 +109,7 @@ namespace BookStore.Controllers
             string file_name = "1.docx";
             return File(file_path, file_type, file_name);
         }
-       
+
         // Отправка массива байтов
         public FileResult GetBytes()
         {
@@ -84,7 +119,7 @@ namespace BookStore.Controllers
             string file_name = "1.docx";
             return File(mas, file_type, file_name);
         }
-        
+
         // Отправка потока
         public FileResult GetStream()
         {
