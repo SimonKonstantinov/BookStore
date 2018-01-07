@@ -150,11 +150,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BookShopController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PhoneController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PagingHelpers.cs" />
     <Compile Include="Models\Book .cs" />
     <Compile Include="Models\BookContext.cs" />
+    <Compile Include="Models\PageInfo.cs" />
+    <Compile Include="Models\Phone.cs" />
     <Compile Include="Models\Purchase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -203,6 +207,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\BookShop\" />
     <Folder Include="Views\My\" />
+    <Folder Include="Views\Phone\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
